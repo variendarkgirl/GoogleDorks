@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Dork Generator</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #1b5e20;
+            color: #ffffff;
+            padding: 15px 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #4caf50;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #66bb6a;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #d32f2f;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .results h3 {
+            color: #66bb6a;
+        }
+
+        .results a {
+            color: #ff5252;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .results a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Google Dork Generator</h1>
+    </header>
+    <main>
+        <div class="input-group">
+            <input type="text" id="domain" placeholder="Enter domain (e.g., example.com)">
+            <button onclick="generateDorks()">Generate Dorks</button>
+        </div>
+        <div class="results" id="results"></div>
+    </main>
+    <script>
+        const dorks = {
+            "File Types": [
+                "site:{domain} filetype:pdf",
+                "site:{domain} filetype:doc",
+                "site:{domain} filetype:xls"
+            ],
+            "Admin Panels": [
+                "site:{domain} inurl:admin",
+                "site:{domain} inurl:login",
+                "site:{domain} inurl:dashboard"
+            ],
+            "Sensitive Info": [
+                "site:{domain} \"password\"",
+                "site:{domain} \"config\"",
+                "site:{domain} \"credentials\""
+            ]
+        };
+
+        function generateDorks() {
+            const domain = document.getElementById('domain').value.trim();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if (!domain) {
+                alert('Please enter a valid domain!');
+                return;
+            }
+
+            for (const category in dorks) {
+                const categoryHeader = document.createElement('h3');
+                categoryHeader.textContent = category;
+                resultsDiv.appendChild(categoryHeader);
+
+                dorks[category].forEach(dork => {
+                    const query = dork.replace('{domain}', domain);
+                    const link = document.createElement('a');
+                    link.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    link.textContent = query;
+                    link.target = '_blank';
+                    resultsDiv.appendChild(link);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
