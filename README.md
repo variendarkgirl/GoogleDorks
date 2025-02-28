@@ -38,9 +38,4 @@ To run the project locally:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-Developed by [VoidCygnus](https://github.com/str1k3r0p).
-
 ```
